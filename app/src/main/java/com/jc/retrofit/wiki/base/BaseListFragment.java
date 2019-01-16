@@ -36,8 +36,8 @@ public abstract class BaseListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new TargetBeanRecyclerViewAdapter(mTargets));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(new TargetBeanRecyclerViewAdapter(getActivity(), mTargets));
         }
         return view;
     }

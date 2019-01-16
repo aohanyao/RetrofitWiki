@@ -1,21 +1,21 @@
 package com.jc.retrofit.wiki.bean;
 
 /**
- * A dummy item representing a piece of content.
+ * 实体类
  */
 public class TargetDummyItem {
-    public final String id;
-    public final String content;
-    public final String details;
+    public final String title;
+    public final String des;
+    public final Class targetActivity;
 
-    public TargetDummyItem(String id, String content, String details) {
-        this.id = id;
-        this.content = content;
-        this.details = details;
+    public TargetDummyItem(String title, String des, Class targetActivity) {
+        this.title = title;
+        this.des = des;
+        this.targetActivity = targetActivity;
     }
 
     @Override
     public String toString() {
-        return content;
+        return des;
     }
 }
