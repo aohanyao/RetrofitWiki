@@ -1,4 +1,4 @@
-package com.jc.retrofit.wiki.annotation;
+package com.jc.retrofit.wiki.sample;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +14,11 @@ public class SampleRequestMainActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         initToolbar(toolbar);
 
+    }
+
+    @Override
+    protected void sendRequest() {
+        // None
     }
 
 }

@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_sample_request_main"/>
+    <include layout="@layout/content_sample_get_request1"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

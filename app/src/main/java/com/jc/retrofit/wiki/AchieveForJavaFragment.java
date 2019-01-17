@@ -1,6 +1,6 @@
 package com.jc.retrofit.wiki;
 
-import com.jc.retrofit.wiki.annotation.SampleRequestMainActivity;
+import com.jc.retrofit.wiki.sample.SampleRequestMainActivity;
 import com.jc.retrofit.wiki.base.BaseListFragment;
 import com.jc.retrofit.wiki.bean.TargetDummyItem;
 
