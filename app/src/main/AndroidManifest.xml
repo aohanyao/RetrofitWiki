@@ -29,7 +29,11 @@
         </activity>
         <activity
                 android:name=".sample.view.activity.SampleGetRequestActivity"
-                android:label="\@GET"
+                android:label="SampleGetRequest"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".sample.view.activity.SampleRxJavaGetRequestActivity"
+                android:label="SampleRxJavaGetRequest"
                 android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

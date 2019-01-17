@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sample_get_request1);
+        setContentView(R.layout.activity_sample_get_request);
         Toolbar toolbar = findViewById(R.id.toolbar);
         initToolbar(toolbar);
         initView();

@@ -15,19 +15,20 @@
 
         <Button android:layout_width="match_parent" android:layout_height="match_parent"
                 android:layout_margin="@dimen/text_margin"
+                android:background="@drawable/background_btn"
+                android:textColor="#fff"
                 android:id="@+id/mSendRequestBtn"
                 android:text="发起请求"
         />
-
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:layout_margin="@dimen/text_margin"
+                  android:id="@+id/mDescTv"
+        />
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:layout_margin="@dimen/text_margin"
                   android:id="@+id/mResultTv"
         />
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:layout_margin="@dimen/text_margin"
-                  android:id="@+id/mDescTv"
-        />
 
     </LinearLayout>
 
