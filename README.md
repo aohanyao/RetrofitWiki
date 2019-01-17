@@ -1,8 +1,4 @@
----
-title: RxJava2 + Retrofit2 完全指南
-tags: Android之路
-grammar_cjkRuby: true
----
+# 🔥RxJava2 + Retrofit2 完全指南🌰
 
 # 前言
 1. 本文详细描述了retrofit在实战项目中使用到的每个细节点和一些特别的使用技巧和封装技巧，旨在能让人在本例子中找到所有需要的例子。而且不单单只是讲解例子，其中还会穿插源码分析，让你明白为什么要这么写？啊，原来还可以这么写？
