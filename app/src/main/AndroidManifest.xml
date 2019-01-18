@@ -13,20 +13,21 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity
-                android:name=".sample.SampleRequestMainActivity"
-                android:label="@string/title_activity_sample_request_main"
-                android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
                 android:name=".MainActivity"
                 android:label="@string/title_activity_main"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".sample.SampleRequestMainActivity"
+                android:label="@string/title_activity_sample_request_main"
+                android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".sample.view.activity.SampleGetRequestActivity"
                 android:label="SampleGetRequest"
@@ -40,8 +41,8 @@
                 android:label="RequestLoggingInterceptor"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".sample.view.activity.RxJavaObserveOnMainThreadActivity"
-                android:label="RequestLoggingInterceptor"
+                android:name=".advanced.view.activity.RxJavaObserveOnMainThreadActivity"
+                android:label="RxJavaObserveOnMainThrea"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".advanced.AdvancedMainActivity"

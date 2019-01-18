@@ -1,4 +1,4 @@
-package com.jc.retrofit.wiki.sample.view.activity;
+package com.jc.retrofit.wiki.advanced.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
