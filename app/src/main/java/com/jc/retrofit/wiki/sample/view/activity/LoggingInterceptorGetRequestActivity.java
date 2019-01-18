@@ -8,13 +8,15 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.List;
 
-public class SampleRxJavaGetRequestActivity extends BaseActivity {
+public class LoggingInterceptorGetRequestActivity extends BaseActivity {
 
     private Disposable disposable;
 
@@ -26,11 +28,8 @@ public class SampleRxJavaGetRequestActivity extends BaseActivity {
 
 
         mDescTv.setText("本例子说明：\n" +
-                "使用RxJava配合请求\n" +
-                "增加RxJava2CallAdapterFactory做数据适配，主要作用是将数据适配器RxJava2需要的格式\n" +
-                "增加RxAndroid做线程切换：\n" +
-                "1、subscribeOn(Schedulers.io())：运行在io线程；\n" +
-                "2、observeOn(AndroidSchedulers.mainThread())：返回结果切换到主线程");
+                "加入okhttp3-logging-interceptor打印Request和Response信息\n" +
+                "基于SampleGetRequest\n");
     }
 
 
@@ -74,7 +73,13 @@ public class SampleRxJavaGetRequestActivity extends BaseActivity {
     }
 
     private void initRetrofitAndService() {
+        OkHttpClient.Builder okHttpClientBuild = new OkHttpClient.Builder();
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okHttpClientBuild.addInterceptor(logInterceptor);
+
         retrofit = new Retrofit.Builder()
+                .client(okHttpClientBuild.build())
                 .baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
