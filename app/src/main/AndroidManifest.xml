@@ -43,6 +43,10 @@
                 android:name=".sample.view.activity.RxJavaObserveOnMainThreadActivity"
                 android:label="RequestLoggingInterceptor"
                 android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".advanced.AdvancedMainActivity"
+                android:label="Advanced"
+                android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

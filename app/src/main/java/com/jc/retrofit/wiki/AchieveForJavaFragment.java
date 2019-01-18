@@ -1,5 +1,6 @@
 package com.jc.retrofit.wiki;
 
+import com.jc.retrofit.wiki.advanced.AdvancedMainActivity;
 import com.jc.retrofit.wiki.sample.SampleRequestMainActivity;
 import com.jc.retrofit.wiki.base.BaseListFragment;
 import com.jc.retrofit.wiki.bean.TargetDummyItem;
@@ -21,6 +22,9 @@ public class AchieveForJavaFragment extends BaseListFragment {
         datas.add(new TargetDummyItem("简单使用",
                 "包含所有的请求方式的简单使用",
                 SampleRequestMainActivity.class));
+        datas.add(new TargetDummyItem("进阶使用",
+                "在简单的基础上，一些进阶使用的技巧",
+                AdvancedMainActivity.class));
 
         return datas;
     }
