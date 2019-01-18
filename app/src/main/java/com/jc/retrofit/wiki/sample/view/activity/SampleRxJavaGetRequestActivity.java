@@ -26,7 +26,7 @@ public class SampleRxJavaGetRequestActivity extends BaseActivity {
 
 
         mDescTv.setText("本例子说明：\n" +
-                "使用RxJava配合请求\n" +
+                "使用RxJava配合请求+RxAndroid切换线程\n" +
                 "增加RxJava2CallAdapterFactory做数据适配，主要作用是将数据适配器RxJava2需要的格式\n" +
                 "增加RxAndroid做线程切换：\n" +
                 "1、subscribeOn(Schedulers.io())：运行在io线程；\n" +

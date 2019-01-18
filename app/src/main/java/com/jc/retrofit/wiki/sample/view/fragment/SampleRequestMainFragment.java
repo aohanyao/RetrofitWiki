@@ -3,6 +3,7 @@ package com.jc.retrofit.wiki.sample.view.fragment;
 import com.jc.retrofit.wiki.base.BaseListFragment;
 import com.jc.retrofit.wiki.bean.TargetDummyItem;
 import com.jc.retrofit.wiki.sample.view.activity.LoggingInterceptorGetRequestActivity;
+import com.jc.retrofit.wiki.sample.view.activity.RxJavaObserveOnMainThreadActivity;
 import com.jc.retrofit.wiki.sample.view.activity.SampleGetRequestActivity;
 import com.jc.retrofit.wiki.sample.view.activity.SampleRxJavaGetRequestActivity;
 
@@ -26,6 +27,9 @@ public class SampleRequestMainFragment extends BaseListFragment {
         datas.add(new TargetDummyItem("Sample RxJava2 GET  ",
                 "使用RxJava2进行配合请求，RxAndroid做线程切换,RxJava2CallAdapterFactory做数据适配",
                 SampleRxJavaGetRequestActivity.class));
+        datas.add(new TargetDummyItem("RxJavaObserveOnMainThread",
+                "不使用RxAndroid做线程切换，自己通过集成CallAdapter.Factory实现线程切换",
+                RxJavaObserveOnMainThreadActivity.class));
         datas.add(new TargetDummyItem("Logging Interceptor RxJava2 GET  ",
                 "加入RequestLoggingInterceptor，对网络请求进行打印",
                 LoggingInterceptorGetRequestActivity.class));

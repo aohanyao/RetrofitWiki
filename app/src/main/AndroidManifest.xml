@@ -39,6 +39,10 @@
                 android:name=".sample.view.activity.LoggingInterceptorGetRequestActivity"
                 android:label="RequestLoggingInterceptor"
                 android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".sample.view.activity.RxJavaObserveOnMainThreadActivity"
+                android:label="RequestLoggingInterceptor"
+                android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

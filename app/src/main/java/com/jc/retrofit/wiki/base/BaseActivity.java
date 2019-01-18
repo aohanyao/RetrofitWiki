@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.jc.retrofit.wiki.R;
 import com.jc.retrofit.wiki.biz.GitHubService;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
 /**
@@ -23,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Retrofit retrofit;
     protected GitHubService service;
 
+    protected String TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,5 +60,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
+    protected HttpLoggingInterceptor getHttpLoggingInterceptor(){
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return logInterceptor;
+    }
 
 }
