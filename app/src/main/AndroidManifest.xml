@@ -41,12 +41,16 @@
                 android:label="RequestLoggingInterceptor"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".advanced.view.activity.RxJavaObserveOnMainThreadActivity"
+                android:name=".advanced.sample.view.activity.RxJavaObserveOnMainThreadActivity"
                 android:label="RxJavaObserveOnMainThrea"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".advanced.view.activity.MultipleResponseActivity"
+                android:name=".advanced.sample.view.activity.MultipleResponseActivity"
                 android:label="多数据格式适配"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".advanced.error.view.HandlerResponseErrorActivity"
+                android:label="统一状态码/错误处理"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".advanced.AdvancedMainActivity"

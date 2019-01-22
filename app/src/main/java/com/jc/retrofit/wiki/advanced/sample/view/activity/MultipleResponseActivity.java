@@ -1,26 +1,19 @@
-package com.jc.retrofit.wiki.advanced.view.activity;
+package com.jc.retrofit.wiki.advanced.sample.view.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import com.jc.retrofit.wiki.advanced.view.convert.CustGsonConverterFactory;
+import com.jc.retrofit.wiki.advanced.sample.view.convert.CustGsonConverterFactory;
 import com.jc.retrofit.wiki.base.BaseActivity;
 import com.jc.retrofit.wiki.bean.Repo;
 import com.jc.retrofit.wiki.biz.GitHubService;
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -108,42 +101,4 @@ public class MultipleResponseActivity extends BaseActivity {
         }
     }
 
-
-    static final class ObserveOnMainCallAdapterFactory extends CallAdapter.Factory {
-        final Scheduler scheduler;
-
-        ObserveOnMainCallAdapterFactory(Scheduler scheduler) {
-            this.scheduler = scheduler;
-        }
-
-        @Override
-        public @Nullable
-        CallAdapter<?, ?> get(
-                Type returnType, Annotation[] annotations, Retrofit retrofit) {
-            if (getRawType(returnType) != Observable.class) {
-                return null; // Ignore non-Observable types.
-            }
-
-            // Look up the next call adapter which would otherwise be used if this one was not present.
-            //noinspection unchecked returnType checked above to be Observable.
-            final CallAdapter<Object, Observable<?>> delegate =
-                    (CallAdapter<Object, Observable<?>>) retrofit.nextCallAdapter(this, returnType,
-                            annotations);
-
-            return new CallAdapter<Object, Object>() {
-                @Override
-                public Object adapt(Call<Object> call) {
-                    // Delegate to get the normal Observable...
-                    Observable<?> o = delegate.adapt(call);
-                    // ...and change it to send notifications to the observer on the specified scheduler.
-                    return o.observeOn(scheduler);
-                }
-
-                @Override
-                public Type responseType() {
-                    return delegate.responseType();
-                }
-            };
-        }
-    }
 }

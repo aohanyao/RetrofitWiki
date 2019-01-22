@@ -1,6 +1,7 @@
 package com.jc.retrofit.wiki.biz;
 
 import com.jc.retrofit.wiki.bean.Repo;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -22,4 +23,7 @@ public interface GitHubService {
     @GET("users/{user}/repos")
     Observable<List<Repo>> listRxJava2Repos(@Path("user") String user,
                                             @Query("type") String type);
+    @GET("users/{user}/repos")
+    Flowable<List<Repo>> listRxJava2FlowableRepos(@Path("user") String user,
+                                          @Query("type") String type);
 }

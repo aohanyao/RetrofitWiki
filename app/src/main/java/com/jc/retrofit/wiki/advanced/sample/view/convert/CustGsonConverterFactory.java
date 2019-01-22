@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jc.retrofit.wiki.advanced.view.convert;
+package com.jc.retrofit.wiki.advanced.sample.view.convert;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
