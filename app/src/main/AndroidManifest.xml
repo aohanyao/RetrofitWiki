@@ -45,6 +45,10 @@
                 android:label="RxJavaObserveOnMainThrea"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+                android:name=".advanced.view.activity.MultipleResponseActivity"
+                android:label="多数据格式适配"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
                 android:name=".advanced.AdvancedMainActivity"
                 android:label="Advanced"
                 android:theme="@style/AppTheme.NoActionBar"/>

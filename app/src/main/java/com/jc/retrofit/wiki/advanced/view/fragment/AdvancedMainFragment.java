@@ -1,5 +1,6 @@
 package com.jc.retrofit.wiki.advanced.view.fragment;
 
+import com.jc.retrofit.wiki.advanced.view.activity.MultipleResponseActivity;
 import com.jc.retrofit.wiki.base.BaseListFragment;
 import com.jc.retrofit.wiki.bean.TargetDummyItem;
 import com.jc.retrofit.wiki.advanced.view.activity.RxJavaObserveOnMainThreadActivity;
@@ -21,6 +22,9 @@ public class AdvancedMainFragment extends BaseListFragment {
         datas.add(new TargetDummyItem("RxJavaObserveOnMainThread",
                 "不使用RxAndroid做线程切换，自己通过集成CallAdapter.Factory实现线程切换",
                 RxJavaObserveOnMainThreadActivity.class));
+        datas.add(new TargetDummyItem("多返回数据格式处理及code提前处理",
+                "应对在APP中请求接口有多种数据格式返回，需要做适配。还有就是需要对错误码进行统一的预处理。",
+                MultipleResponseActivity.class));
         return datas;
     }
 
