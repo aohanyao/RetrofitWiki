@@ -43,19 +43,16 @@ final class HandlerErrorGsonResponseBodyConverter<T> implements Converter<Respon
         this.random = new Random();
         this.adapter = adapter;
         mockResult = new ArrayList<>();
-        mockResult.add("{\n" +
-                "\t\"code\":200,\n" +
-                "\t\"message\":\"成功，但是没有数据\"\n" +
-                "\t\"data\":[]\n" +
+        mockResult.add("{\"code\":200,\"message\":\"成功，但是没有数据\",\"data\":[]\n" +
                 "}");
         mockResult.add("{\n" +
                 "\t\"code\":-1,\n" +
-                "\t\"message\":\"发生错误，抛出错误！\"\n" +
+                "\t\"message\":\"这里是接口返回的：错误的信息，抛出错误信息提示！\",\n" +
                 "\t\"data\":[]\n" +
                 "}");
         mockResult.add("{\n" +
                 "\t\"code\":401,\n" +
-                "\t\"message\":\"权限不足，请重新登录！\"\n" +
+                "\t\"message\":\"这里是接口返回的：权限不足，请重新登录！\",\n" +
                 "\t\"data\":[]\n" +
                 "}");
     }
@@ -66,7 +63,7 @@ final class HandlerErrorGsonResponseBodyConverter<T> implements Converter<Respon
         String jsonString = value.string();
         try {
             // 这里为了模拟不同的网络请求，所以采用了本地字符串的格式然后进行随机选择判断结果。
-            int resultIndex = random.nextInt(mockResult.size());
+            int resultIndex = random.nextInt(mockResult.size()+1);
             if (resultIndex == mockResult.size()) {
                 return adapter.fromJson(jsonString);
 

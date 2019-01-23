@@ -27,7 +27,7 @@ public class AdvancedMainFragment extends BaseListFragment {
                 "应对在APP中请求接口有多种数据格式返回，需要做适配。还有就是需要对错误码进行统一的预处理。",
                 MultipleResponseActivity.class));
         datas.add(new TargetDummyItem("统一状态码/错误处理",
-                "1.统一对返回结果中的状态码做统一的处理，开发者只关心拿到的data。2.对Exaction进行统一的抓取和处理。",
+                "1.统一对返回结果中的状态码做统一的处理，开发者只关心拿到的data。\n2.对Exaction进行统一的抓取和处理。",
                 HandlerResponseErrorActivity.class));
         return datas;
     }

@@ -58,7 +58,7 @@ public class HandlerResponseErrorActivity extends BaseActivity implements Handle
                 .subscribeWith(new ApiSubscriber<List<Repo>>(this) {
                     @Override
                     public void onNext(List<Repo> repos) {
-                        mResultTv.append("repoCount:" + repos.size() + ":\n");
+                        mResultTv.append("请求成功，repoCount:" + repos.size() + ":\n");
                         for (Repo repo : repos) {
                             mResultTv.append("repoName:" + repo.getName() + "    star:" + repo.getStargazers_count() + "\n");
                         }
