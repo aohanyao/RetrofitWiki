@@ -34,6 +34,7 @@ dependencies {
     api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["rxjava2"]
     api rootProject.ext.dependencies["rxandroid2"]
+    api rootProject.ext.dependencies["logger"]
     api rootProject.ext.dependencies["okhttp3-logging-interceptor"]
     api rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
     api rootProject.ext.dependencies["retrofit-converter-gson2"]

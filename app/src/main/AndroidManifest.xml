@@ -53,6 +53,10 @@
                 android:label="统一状态码/错误处理"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+                android:name=".advanced.sample.view.activity.DynamicBaseUrlActivity"
+                android:label="动态BaseUrl"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
                 android:name=".advanced.AdvancedMainActivity"
                 android:label="Advanced"
                 android:theme="@style/AppTheme.NoActionBar"/>
