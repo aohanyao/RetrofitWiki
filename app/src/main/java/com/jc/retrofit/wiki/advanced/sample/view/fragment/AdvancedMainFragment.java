@@ -1,6 +1,7 @@
 package com.jc.retrofit.wiki.advanced.sample.view.fragment;
 
 import com.jc.retrofit.wiki.advanced.error.view.HandlerResponseErrorActivity;
+import com.jc.retrofit.wiki.advanced.sample.view.activity.Authenticator1Activity;
 import com.jc.retrofit.wiki.advanced.sample.view.activity.DynamicBaseUrlActivity;
 import com.jc.retrofit.wiki.advanced.sample.view.activity.MultipleResponseActivity;
 import com.jc.retrofit.wiki.advanced.sample.view.activity.RxJavaObserveOnMainThreadActivity;
@@ -33,6 +34,9 @@ public class AdvancedMainFragment extends BaseListFragment {
         datas.add(new TargetDummyItem("动态BaseUrl",
                 "通过自定义 Interceptor 的方式来完成对 url 的动态替换",
                 DynamicBaseUrlActivity.class));
+        datas.add(new TargetDummyItem("Authenticator token 重试实现方法1",
+                "使用okhttp提供的authenticator接口完成token实现的拦截和获取",
+                Authenticator1Activity.class));
         return datas;
     }
 

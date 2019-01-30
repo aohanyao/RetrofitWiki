@@ -57,6 +57,10 @@
                 android:label="动态BaseUrl"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+                android:name=".advanced.sample.view.activity.Authenticator1Activity"
+                android:label="Authenticator token 重试实现方法1"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
                 android:name=".advanced.AdvancedMainActivity"
                 android:label="Advanced"
                 android:theme="@style/AppTheme.NoActionBar"/>
