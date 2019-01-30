@@ -62,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected HttpLoggingInterceptor getHttpLoggingInterceptor(){
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         return logInterceptor;
     }
 

@@ -61,6 +61,10 @@
                 android:label="Authenticator token 重试实现方法1"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+                android:name=".advanced.sample.view.activity.Authenticator2Activity"
+                android:label="Authenticator token 重试实现方法2"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
                 android:name=".advanced.AdvancedMainActivity"
                 android:label="Advanced"
                 android:theme="@style/AppTheme.NoActionBar"/>
