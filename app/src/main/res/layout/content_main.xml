@@ -12,7 +12,7 @@
     <fragment android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:id="@+id/mBaseListFragment"
-              android:name="com.jc.retrofit.wiki.AchieveForJavaFragment"
+              android:name="com.jc.retrofit.wiki.advanced.sample.view.fragment.AdvancedMainFragment"
     />
 
 </android.support.constraint.ConstraintLayout>
