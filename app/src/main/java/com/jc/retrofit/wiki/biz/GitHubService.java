@@ -1,6 +1,8 @@
 package com.jc.retrofit.wiki.biz;
 
+import com.jc.retrofit.wiki.annotation.JsonParam;
 import com.jc.retrofit.wiki.bean.AuthorizationBean;
+import com.jc.retrofit.wiki.bean.JsonQueryParametersBean;
 import com.jc.retrofit.wiki.bean.Repo;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -31,4 +33,7 @@ public interface GitHubService {
 
     @GET("authorizations")
     Observable<List<AuthorizationBean>> listAuthorizations();
+
+    @GET("/filter")
+    Call<ResponseBody> exampleJsonParam(@JsonParam @Query("value") JsonQueryParametersBean value);
 }

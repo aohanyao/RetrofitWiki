@@ -49,6 +49,9 @@ public class AdvancedMainFragment extends BaseListFragment {
         datas.add(new TargetDummyItem("Authenticator token 重试实现方法2",
                 "使用自定义 Interceptor 来实现，只会调用一次刷新接口，完全有开发者控制。",
                 Authenticator2Activity.class));
+        datas.add(new TargetDummyItem("JsonQueryParameters ",
+                "自定义序列化，实现get请求提交json格式的参数。",
+                JsonQueryParametersActivity.class));
         return datas;
     }
 
