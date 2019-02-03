@@ -35,5 +35,5 @@ public interface GitHubService {
     Observable<List<AuthorizationBean>> listAuthorizations();
 
     @GET("/filter")
-    Call<ResponseBody> exampleJsonParam(@JsonParam @Query("value") JsonQueryParametersBean value);
+    Observable<AuthorizationBean/*这里只是随便加的，反正不会有返回结果*/> exampleJsonParam(@JsonParam @Query("value") JsonQueryParametersBean value);
 }
