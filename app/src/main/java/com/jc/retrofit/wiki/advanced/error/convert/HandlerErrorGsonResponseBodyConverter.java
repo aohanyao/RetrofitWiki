@@ -16,7 +16,6 @@
 package com.jc.retrofit.wiki.advanced.error.convert;
 
 import android.util.Log;
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.jc.retrofit.wiki.advanced.error.exception.NetErrorException;
 import okhttp3.ResponseBody;
@@ -30,31 +29,20 @@ import java.util.List;
 import java.util.Random;
 
 final class HandlerErrorGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
-    private final Gson gson;
     private final TypeAdapter<T> adapter;
-    private final String TAG = getClass().getSimpleName();
 
+    /**模拟的假数据*/
     private final List<String> mockResult;
 
     private final Random random;
 
-    HandlerErrorGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
-        this.gson = gson;
+    HandlerErrorGsonResponseBodyConverter(TypeAdapter<T> adapter) {
         this.random = new Random();
         this.adapter = adapter;
         mockResult = new ArrayList<>();
-        mockResult.add("{\"code\":200,\"message\":\"成功，但是没有数据\",\"data\":[]\n" +
-                "}");
-        mockResult.add("{\n" +
-                "\t\"code\":-1,\n" +
-                "\t\"message\":\"这里是接口返回的：错误的信息，抛出错误信息提示！\",\n" +
-                "\t\"data\":[]\n" +
-                "}");
-        mockResult.add("{\n" +
-                "\t\"code\":401,\n" +
-                "\t\"message\":\"这里是接口返回的：权限不足，请重新登录！\",\n" +
-                "\t\"data\":[]\n" +
-                "}");
+        mockResult.add("{\"code\":200,\"message\":\"成功，但是没有数据\",\"data\":[]}");
+        mockResult.add("{\"code\":-1,\"message\":\"这里是接口返回的：错误的信息，抛出错误信息提示！\",\"data\":[]}");
+        mockResult.add("{\"code\":401,\"message\":\"这里是接口返回的：权限不足，请重新登录！\",\"data\":[]}");
     }
 
     @Override
@@ -63,14 +51,17 @@ final class HandlerErrorGsonResponseBodyConverter<T> implements Converter<Respon
         String jsonString = value.string();
         try {
             // 这里为了模拟不同的网络请求，所以采用了本地字符串的格式然后进行随机选择判断结果。
-            int resultIndex = random.nextInt(mockResult.size()+1);
+            int resultIndex = random.nextInt(mockResult.size() + 1);
             if (resultIndex == mockResult.size()) {
                 return adapter.fromJson(jsonString);
 
             } else {
+                // 这里模拟不同的数据结构
+                jsonString = mockResult.get(resultIndex);
+
                 Log.e("TAG", "这里进行了返回结果的判断");
                 // ------------------ JsonObject 只做了初略的判断，具体情况自定
-                JSONObject object = new JSONObject(mockResult.get(resultIndex));
+                JSONObject object = new JSONObject(jsonString);
                 int code = object.getInt("code");
                 if (code != 200) {
                     throw new NetErrorException(object.getString("message"), code);

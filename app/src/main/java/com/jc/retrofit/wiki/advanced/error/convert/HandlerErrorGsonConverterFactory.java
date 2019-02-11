@@ -39,6 +39,7 @@ public final class HandlerErrorGsonConverterFactory extends Converter.Factory {
     // 作统一的处理，只需要继承 Convert.Factory 然后实现相关的方法，
     // 在 responseBodyConvert中进行统一的处理即可，也就是说，我们
     // 根本就不需要GsonConvert这个库，我们完全可以自定义
+
     /**
      * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
@@ -67,7 +68,7 @@ public final class HandlerErrorGsonConverterFactory extends Converter.Factory {
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
                                                             Retrofit retrofit) {
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new HandlerErrorGsonResponseBodyConverter<>(gson, adapter);
+        return new HandlerErrorGsonResponseBodyConverter<>(adapter);
     }
 
     @Override

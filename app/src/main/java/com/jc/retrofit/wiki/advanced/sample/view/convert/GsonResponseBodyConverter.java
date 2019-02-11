@@ -25,15 +25,21 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final TypeAdapter<T> adapter;
     private final String TAG = getClass().getSimpleName();
+    private final List<String> mockResult;
 
     GsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
+        mockResult = new ArrayList<>();
+        mockResult.add("{\"code\": 200,\"data\": {\"id\": \"1\",\"name\": \"数据格式 1\",\"stargazers_count\": 1}}");
+        mockResult.add("{\"status\": 200,\"userInfo\": {\"id\": \"2\",\"name\": \"数据格式 2\",\"stargazers_count\": 2}}");
     }
 
     @Override

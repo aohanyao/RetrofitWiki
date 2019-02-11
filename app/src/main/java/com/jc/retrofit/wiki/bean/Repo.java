@@ -9,7 +9,6 @@ package com.jc.retrofit.wiki.bean;
 public class Repo {
     private String id;
     private String name;
-    private String full_name;
     private String stargazers_count;
 
     public String getId() {
@@ -28,13 +27,7 @@ public class Repo {
         this.name = name;
     }
 
-    public String getFull_name() {
-        return full_name;
-    }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
-    }
 
     public String getStargazers_count() {
         return stargazers_count;
@@ -49,7 +42,6 @@ public class Repo {
         return "Repo{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", full_name='" + full_name + '\'' +
                 ", stargazers_count='" + stargazers_count + '\'' +
                 '}';
     }
