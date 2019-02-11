@@ -373,7 +373,7 @@ disposable = service.listRxJava2FlowableRepos("aohanyao", "owner")
 ```
 
 ####  演示
-![HandlerResponseError](./image/HandlerResponseErrorActivity.gif)
+![HandlerResponseError](/image/HandlerResponseErrorActivity.gif)
 
 ## 结束
 这里只写了对返回状态码和错误的统一处理，并未对不同的数据结构进行处理，下一篇将对不同的数据结构进行统一处理。
