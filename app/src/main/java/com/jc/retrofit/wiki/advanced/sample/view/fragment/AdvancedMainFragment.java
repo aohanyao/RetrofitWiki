@@ -48,8 +48,8 @@ public class AdvancedMainFragment extends BaseListFragment {
                 MultipleResponseActivity.class));
 
 
-        datas.add(new TargetDummyItem("动态BaseUrl",
-                "通过自定义 Interceptor 的方式来完成对 url 的动态替换",
+        datas.add(new TargetDummyItem("动态BaseUrl/Path/Parameter",
+                "通过自定义 Interceptor 的方式来完成对 Url/Path/Parameter 的动态替换。",
                 DynamicBaseUrlActivity.class));
 
         datas.add(new TargetDummyItem("Authenticator token 重试实现方法1",
