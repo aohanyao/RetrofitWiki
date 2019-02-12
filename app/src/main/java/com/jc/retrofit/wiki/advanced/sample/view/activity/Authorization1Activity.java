@@ -17,50 +17,37 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
- * token重试机制2，使用拦截器的机制
+ * token重试机制1
  */
-public class Authenticator2Activity extends BaseActivity {
+public class Authorization1Activity extends BaseActivity {
 
     private Disposable disposable;
 
     private AuthenticatorHandler mAuthenticatorHandler;
 
 
-    private Interceptor mAAuthenticatorInterceptor = new Interceptor() {
+    private Authenticator authorization = new Authenticator() {
         @Override
-        public Response intercept(Chain chain) throws IOException {
-            // 获取请求
-            Request request = chain.request();
-            // 获取响应
-            Response response = chain.proceed(request);
-            // 在这里判断是不是是token失效
-            // 当然，判断条件不会这么简单，会有更多的判断条件的
-            if (response.code() == 401) {
-                //我这里为了显示错误信息，所以填充到TextView上，真实项目肯定不是这样的。
+        public Request authenticate(Route route, Response response) throws IOException {
+            //       我这里为了显示错误信息，所以填充到TextView上，真实项目肯定不是这样的。
+            sendMessage("得到错误：" + response.message() + "，应该是：" + response.code() + " \n");
+            sendMessage("准备模拟发起请求刷新token...\n");
+            // ------------------- 这里应该调用自己的刷新token的接口
+            // 这里抛出的错误会直接回调 onError
+            // 这里发起的请求是同步的，刷新完成token后再增加到header中
+//            String token = refreshToken();
+            String token = Credentials.basic("userName", "password", Charset.forName("UTF-8"));
+            sendMessage("刷新token成功...\n");
+            sendMessage("重新调起上一次请求，并增加 Authorization\n");
 
-                sendMessage("得到错误：" + response.message() + " -> " + response.code() + " \n");
-                sendMessage("准备模拟发起请求刷新token...\n");
-                //这里应该调用自己的刷新token的接口
-                // String token = refreshToken();//
-                String token = "this is real token";
-                // 这里发起的请求是同步的，刷新完成token后再增加到header中
-                // 这里抛出的错误会直接回调 onError
-                sendMessage("刷新token成功...\n");
-                sendMessage("重新调起上一次请求，并增加 Authorization\n");
-
-                Request retryRequest = chain.request()
-                        .newBuilder()
-                        .header("Authorization", token)
-                        .build();
-
-                // 再次发起请求
-                return chain.proceed(retryRequest);
-            }
-
-            return response;
+            return response.request()
+                    .newBuilder()
+                    .header("Authorization", token)
+                    .build();
         }
 
         //   这里只是为了回调消息
@@ -80,7 +67,8 @@ public class Authenticator2Activity extends BaseActivity {
         mAuthenticatorHandler = new AuthenticatorHandler();
 
         mDescTv.setText("本例子说明：\n" +
-                "通过 Interceptor 实现对 401、token 静默刷新。用这种方式的话，重试只会调用一次接口。");
+                "通过 okhttp 提供的 authenticator 接口来实现对 401、token 静默刷新。使用这种方式有个问题就是会一直进行重试，\" +\n" +
+                "                        \"直到重试次数大于设置的次数（默认为21次）才会断开连接。");
     }
 
 
@@ -127,8 +115,8 @@ public class Authenticator2Activity extends BaseActivity {
 
         retrofit = new Retrofit.Builder()
                 .client(new OkHttpClient.Builder()
+                        .authenticator(authorization)// 增加重试
                         .addInterceptor(getHttpLoggingInterceptor())
-                        .addInterceptor(mAAuthenticatorInterceptor)// 重试拦截器
                         .build())
                 .baseUrl("https://api.github.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -138,6 +126,9 @@ public class Authenticator2Activity extends BaseActivity {
         service = retrofit.create(GitHubService.class);
     }
 
+    /**
+     * 只是为了在主线程回调消息而已
+     */
     private final class AuthenticatorHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
