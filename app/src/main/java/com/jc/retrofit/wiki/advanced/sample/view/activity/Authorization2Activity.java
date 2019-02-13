@@ -44,14 +44,16 @@ public class Authorization2Activity extends BaseActivity {
 
                 sendMessage("得到错误：" + response.message() + " -> " + response.code() + " \n");
                 sendMessage("准备模拟发起请求刷新token...\n");
-                //这里应该调用自己的刷新token的接口
-//                String token = refreshToken();
-                String token = Credentials.basic("userName", "password", Charset.forName("UTF-8"));
+                // 这里应该调用自己的刷新token的接口
                 // 这里发起的请求是同步的，刷新完成token后再增加到header中
                 // 这里抛出的错误会直接回调 onError
+//                String token = refreshToken();
+                String token = Credentials.basic("userName", "password", Charset.forName("UTF-8"));
+
                 sendMessage("刷新token成功...\n");
                 sendMessage("重新调起上一次请求，并增加 Authorization\n");
 
+                // 创建新的请求，并增加header
                 Request retryRequest = chain.request()
                         .newBuilder()
                         .header("Authorization", token)
@@ -63,16 +65,14 @@ public class Authorization2Activity extends BaseActivity {
 
             return response;
         }
-
-        //   这里只是为了回调消息
-        private void sendMessage(String msg) {
-            Logger.e(msg);
-            Message message = mAuthenticatorHandler.obtainMessage();
-            message.obj = msg;
-            mAuthenticatorHandler.sendMessage(message);
-        }
     };
-
+    //   这里只是为了回调消息
+    private void sendMessage(String msg) {
+        Logger.e(msg);
+        Message message = mAuthenticatorHandler.obtainMessage();
+        message.obj = msg;
+        mAuthenticatorHandler.sendMessage(message);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

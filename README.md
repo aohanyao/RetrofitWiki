@@ -6,6 +6,7 @@
 - [统一状态码和Exception处理](wiki/统一状态码和Exception处理.md)
 - [动态Url/Path/Parameter/Header](wiki/DynamicBaseUrl.md)
 - [对返回Response的统一处理](wiki/对返回Response的统一处理.md)
+- [Authenticator处理与Token静默刷新](wiki/Authenticator处理与Token静默刷新.md)
 
 # Doing
 
