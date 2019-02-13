@@ -33,32 +33,38 @@ public class Authorization1Activity extends BaseActivity {
     private Authenticator authorization = new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
-            //       我这里为了显示错误信息，所以填充到TextView上，真实项目肯定不是这样的。
+            // 我这里为了显示错误信息，所以填充到TextView上，真实项目肯定不是这样的。
             sendMessage("得到错误：" + response.message() + "，应该是：" + response.code() + " \n");
             sendMessage("准备模拟发起请求刷新token...\n");
+
+
+            //-----------核心代码-------
             // ------------------- 这里应该调用自己的刷新token的接口
             // 这里抛出的错误会直接回调 onError
             // 这里发起的请求是同步的，刷新完成token后再增加到header中
-//            String token = refreshToken();
+            // String token = refreshToken();
             String token = Credentials.basic("userName", "password", Charset.forName("UTF-8"));
+            //-----------核心代码-------
+
+
             sendMessage("刷新token成功...\n");
             sendMessage("重新调起上一次请求，并增加 Authorization\n");
 
+            //-----------核心代码-------
             return response.request()
                     .newBuilder()
                     .header("Authorization", token)
                     .build();
-        }
-
-        //   这里只是为了回调消息
-        private void sendMessage(String msg) {
-            Logger.e(msg);
-            Message message = mAuthenticatorHandler.obtainMessage();
-            message.obj = msg;
-            mAuthenticatorHandler.sendMessage(message);
+            //-----------核心代码-------
         }
     };
-
+    //   这里只是为了回调消息
+    private void sendMessage(String msg) {
+        Logger.e(msg);
+        Message message = mAuthenticatorHandler.obtainMessage();
+        message.obj = msg;
+        mAuthenticatorHandler.sendMessage(message);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +74,7 @@ public class Authorization1Activity extends BaseActivity {
 
         mDescTv.setText("本例子说明：\n" +
                 "通过 okhttp 提供的 authenticator 接口来实现对 401、token 静默刷新。使用这种方式有个问题就是会一直进行重试，\" +\n" +
-                "                        \"直到重试次数大于设置的次数（默认为21次）才会断开连接。");
+                "\"直到重试次数大于设置的次数（默认为21次）才会断开连接。");
     }
 
 
