@@ -14,8 +14,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.util.List;
-
 /**
  * 多种数据格式处理
  */
@@ -47,10 +45,10 @@ public class MultipleResponseActivity extends BaseActivity {
         }
 
         mResultTv.setText("创建请求................\n");
-        service.listRxJava2Repos("aohanyao", "owner")
+        service.singleRxJava2Repos("aohanyao", "owner")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Repo>>() {
+                .subscribe(new Observer<Repo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
@@ -58,10 +56,8 @@ public class MultipleResponseActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(List<Repo> repos) {
-                        for (Repo repo : repos) {
-                            mResultTv.append("repoName:" + repo.getName() + "    star:" + repo.getStargazers_count() + "\n");
-                        }
+                    public void onNext(Repo repo) {
+                        mResultTv.append("repoName:" + repo.getName() + "    star:" + repo.getStargazers_count() + "\n");
                     }
 
                     @Override

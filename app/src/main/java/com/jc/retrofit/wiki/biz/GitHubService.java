@@ -28,6 +28,10 @@ public interface GitHubService {
                                             @Query("type") String type);
 
     @GET("users/{user}/repos")
+    Observable<Repo> singleRxJava2Repos(@Path("user") String user,
+                                              @Query("type") String type);
+
+    @GET("users/{user}/repos")
     Flowable<List<Repo>> listRxJava2FlowableRepos(@Path("user") String user,
                                                   @Query("type") String type);
 
