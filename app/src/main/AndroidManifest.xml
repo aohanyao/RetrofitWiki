@@ -54,7 +54,7 @@
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".advanced.sample.view.activity.DynamicBaseUrlActivity"
-                android:label="动态BaseUrl"
+                android:label="动态Url/Path/Parameter/Header"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".advanced.sample.view.activity.Authorization1Activity"

@@ -4,6 +4,7 @@
 # look
 - [JsonQueryParameters](wiki/JsonQueryParameters.md)
 - [统一状态码和Exception处理](wiki/统一状态码和Exception处理.md)
+- [动态Url/Path/Parameter/Header](wiki/DynamicBaseUrl.md)
 
 # Doing
 
@@ -12,7 +13,7 @@
 #### Get请求提交Json字符串
 ### POST
 #### POST 提交Body对象
-后端接收数据有两种方式：`RequestParamter`和`RequestBody`,RequestParamter接收方式的话需要我们通过key=value的方式进行上传，是一种非常普遍的传输方式。而RequestBody可以说是前端人员最喜欢的传值方式了，因为我们可以什么都不做，直接将对象序列化为Json字符串加入到body中就能进行提交了，省去一个参数一个参数的填充，下面就来看看如何使用@Body，而注解的参数对象又是如何序列化为Json字符串的？
+后端接收数据有两种方式：`RequestParameter`和`RequestBody`,RequestParameter接收方式的话需要我们通过key=value的方式进行上传，是一种非常普遍的传输方式。而RequestBody可以说是前端人员最喜欢的传值方式了，因为我们可以什么都不做，直接将对象序列化为Json字符串加入到body中就能进行提交了，省去一个参数一个参数的填充，下面就来看看如何使用@Body，而注解的参数对象又是如何序列化为Json字符串的？
 ### 自定义请求方式
 Retrofit为我们提供了默认实现的几种请求,基本情况下是完全够用了，在特殊情况下我们可以进行请求方式的自定义来满足我们的需求，这里我们创建一个`PP`请求。
 ## 提交不编码的特殊字符(UrlEncode)

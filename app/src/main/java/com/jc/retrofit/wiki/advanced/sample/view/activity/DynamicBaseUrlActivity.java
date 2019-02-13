@@ -12,11 +12,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.http.GET;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.Executors;
 
 /**
- * 动态BaseUrl
+ * 动态Url/Path/Parameter/Header
  */
 public class DynamicBaseUrlActivity extends BaseActivity {
 
@@ -42,8 +41,7 @@ public class DynamicBaseUrlActivity extends BaseActivity {
 
         mDescTv.setText("本例子说明：\n" +
                 "通过增加自定义 Interceptor 的方式。\n" +
-                "①完成对 BaseUrl 的动态替换。\n" +
-                "②完成的 请求 path 的动态替换。\n");
+                "完成对 动态Url/Path/Parameter/Header 的动态替换和新增。\n");
     }
 
 
@@ -101,7 +99,11 @@ public class DynamicBaseUrlActivity extends BaseActivity {
 
 
     /**
-     * 自定义的拦截器，实现baseUrl的动态替换
+     * 自定义的拦截器
+     * 1. 实现baseUrl的动态替换
+     * 2. path的替换
+     * 3. 增加parameter
+     * 3. 增加header
      */
     final class HostSelectionInterceptor implements Interceptor {
 
@@ -118,6 +120,7 @@ public class DynamicBaseUrlActivity extends BaseActivity {
             String host = httpUrl.host();
             // 这里是判断 当然真实情况不会这么简单
             if (httpUrl.host().equals("api.github.com")) {
+                // 只是为了在demo中显示消息提示
                 sendMessage("\n\n替换url:www.baidu.com\n");
                 host = "www.baidu.com";
             }
@@ -126,16 +129,23 @@ public class DynamicBaseUrlActivity extends BaseActivity {
 
 
             // 替换path
+            //List<String> pathSegments = httpUrl.pathSegments();
+            // 这里是我已经知道了我是要移除第一个路径，所以我直接就移除了
+            // 真实项目中，判断条件更加复杂
+            newUrlBuilder.removePathSegment(0);
+            // 将index的segment替换为传入的值
+            //newUrlBuilder.setPathSegment(index,segment);
 
-            List<String> pathSegments = httpUrl.pathSegments();
-
-            newUrlBuilder.setPathSegment(0, pathSegments.get(1));
+            // 添加参数
+            newUrlBuilder.addQueryParameter("version", "v1.3.1");
 
             // 创建新的请求
             request = request.newBuilder()
                     .url(newUrlBuilder.build())
+                    .header("NewHeader", "NewHeaderValue")
                     .build();
-            sendMessage("\n\n新请求地址和参数：" + request.url().toString() + "\n");
+            // 只是为了在demo中显示消息提示
+            sendMessage("\n\n新请求地址和参数：" + request.url().toString() + "\n\n");
             return chain.proceed(request);
         }
     }
