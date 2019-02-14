@@ -63,6 +63,9 @@ public class AdvancedMainFragment extends BaseListFragment {
         datas.add(new TargetDummyItem("JsonQueryParameters ",
                 "自定义序列化，实现get请求提交json格式的参数。",
                 JsonQueryParametersActivity.class));
+        datas.add(new TargetDummyItem("提交参数不进行URL编码",
+                "提交数据的时候，不进行URL编码，提交原始数据。例如：a=<b>默认情况下会编码成：a=%3cb%3e",
+                UrlEncodeActivity.class));
         return datas;
     }
 
