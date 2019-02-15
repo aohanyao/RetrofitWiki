@@ -11,7 +11,6 @@
 # Doing
 
 - 每种注解简单使用
-- Get请求提交Json字符串
 - POST 提交Body对象
 - 自定义请求方式
 - 提交不编码的特殊字符(UrlEncode)
