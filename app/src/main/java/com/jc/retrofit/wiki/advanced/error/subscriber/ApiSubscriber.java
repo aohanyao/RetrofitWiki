@@ -2,10 +2,8 @@ package com.jc.retrofit.wiki.advanced.error.subscriber;
 
 import com.google.gson.JsonParseException;
 import com.jc.retrofit.wiki.advanced.error.exception.NetErrorException;
-import com.jc.retrofit.wiki.advanced.error.inf.HandlerBaseView;
 import io.reactivex.subscribers.ResourceSubscriber;
 import org.json.JSONException;
-import org.reactivestreams.Subscriber;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -19,32 +17,11 @@ import java.net.UnknownHostException;
  */
 public abstract class ApiSubscriber<T> extends ResourceSubscriber<T> {
 
-    private HandlerBaseView v;
-
-    private ApiSubscriber() {
-    }
-
-    /**
-     * 使用这个构造函数时候 将错误提示交给 v来处理
-     *
-     * @param v
-     */
-    public ApiSubscriber(HandlerBaseView v) {
-        this.v = v;
-    }
-
-
-    public ApiSubscriber(Subscriber<?> subscriber, HandlerBaseView v) {
-        this.v = v;
-    }
-
-
     @Override
     public void onError(Throwable e) {
         NetErrorException error = null;
         if (e != null) {
-
-
+            // 对不是自定义抛出的错误进行解析
             if (!(e instanceof NetErrorException)) {
                 if (e instanceof UnknownHostException) {
                     error = new NetErrorException(e, NetErrorException.NoConnectError);
@@ -62,12 +39,15 @@ public abstract class ApiSubscriber<T> extends ResourceSubscriber<T> {
             }
         }
 
-
-        if (v != null) {
-            v.onFail(error);
-        }
+        // 回调抽象方法
+        onFail(error);
 
     }
+
+    /**
+     * 回调错误
+     */
+    protected abstract void onFail(NetErrorException error);
 
     @Override
     public void onComplete() {

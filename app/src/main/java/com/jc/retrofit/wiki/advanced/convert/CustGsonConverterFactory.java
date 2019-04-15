@@ -67,7 +67,7 @@ public final class CustGsonConverterFactory extends Converter.Factory {
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
                                                             Retrofit retrofit) {
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new GsonResponseBodyConverter<>(gson, adapter);
+        return new GsonResponseBodyConverter<>(adapter);
     }
 
     @Override

@@ -106,9 +106,6 @@ public class NetErrorException extends IOException {
 
     }
 
-    public int getmErrorType() {
-        return mErrorType;
-    }
 
     /**
      * 获取错误类型

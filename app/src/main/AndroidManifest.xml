@@ -7,9 +7,9 @@
 
     <application
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/icon_android_road"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/icon_android_road"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
@@ -54,14 +54,18 @@
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
                 android:name=".advanced.sample.view.activity.DynamicBaseUrlActivity"
-                android:label="动态BaseUrl"
+                android:label="动态Url/Path/Parameter/Header"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".advanced.sample.view.activity.Authenticator1Activity"
+                android:name=".advanced.sample.view.activity.Authorization1Activity"
                 android:label="Authenticator token 重试实现方法1"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".advanced.sample.view.activity.Authenticator2Activity"
+                android:name=".advanced.sample.view.activity.UrlEncodeActivity"
+                android:label="参数不进行URL编码"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".advanced.sample.view.activity.Authorization2Activity"
                 android:label="Authenticator token 重试实现方法2"
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity

@@ -8,9 +8,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 import java.util.List;
 
@@ -28,6 +26,10 @@ public interface GitHubService {
                                             @Query("type") String type);
 
     @GET("users/{user}/repos")
+    Observable<Repo> singleRxJava2Repos(@Path("user") String user,
+                                        @Query("type") String type);
+
+    @GET("users/{user}/repos")
     Flowable<List<Repo>> listRxJava2FlowableRepos(@Path("user") String user,
                                                   @Query("type") String type);
 
@@ -36,4 +38,12 @@ public interface GitHubService {
 
     @GET("/filter")
     Observable<AuthorizationBean/*这里只是随便加的，反正不会有返回结果*/> exampleJsonParam(@JsonParam @Query("value") JsonQueryParametersBean value);
+
+
+    /**
+     * 这个只是测试这么写
+     */
+    @POST("robots.txt")
+    @FormUrlEncoded
+    retrofit2.Call<ResponseBody> robotsByEncode(@Field(value = "a", encoded = true) String a);
 }

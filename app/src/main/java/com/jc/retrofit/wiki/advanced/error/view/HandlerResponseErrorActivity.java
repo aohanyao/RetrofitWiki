@@ -3,7 +3,6 @@ package com.jc.retrofit.wiki.advanced.error.view;
 import android.os.Bundle;
 import com.jc.retrofit.wiki.advanced.error.convert.HandlerErrorGsonConverterFactory;
 import com.jc.retrofit.wiki.advanced.error.exception.NetErrorException;
-import com.jc.retrofit.wiki.advanced.error.inf.HandlerBaseView;
 import com.jc.retrofit.wiki.advanced.error.subscriber.ApiSubscriber;
 import com.jc.retrofit.wiki.base.BaseActivity;
 import com.jc.retrofit.wiki.bean.Repo;
@@ -12,7 +11,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -21,7 +19,7 @@ import java.util.List;
 /**
  * 统一处理错误
  */
-public class HandlerResponseErrorActivity extends BaseActivity implements HandlerBaseView {
+public class HandlerResponseErrorActivity extends BaseActivity {
 
     private Disposable disposable;
     Scheduler observeOn;
@@ -38,10 +36,9 @@ public class HandlerResponseErrorActivity extends BaseActivity implements Handle
                 "2.对Exaction进行统一的抓取和处理。\n" +
                 "实现思路：\n" +
                 "① 创建自定义Exception类，所有错误统一处理\n" +
-                "① 自定义BodyConverter，在这里对正常返回结果做第一次判断，抛出Exception\n" +
-                "② 创建interface接口，专门用于回调错误\n" +
+                "② 自定义BodyConverter，在这里对正常返回结果做第一次判断，抛出Exception\n" +
                 "③ 自定义Subscriber，在onError中处理错误\n" +
-                "④ View层实现interface接口，对结果进行处理，到底是弹窗还是toast等");
+                "④ 在error和complete中对结果进行处理，到底是弹窗还是toast等");
     }
 
 
@@ -55,7 +52,7 @@ public class HandlerResponseErrorActivity extends BaseActivity implements Handle
         disposable = service.listRxJava2FlowableRepos("aohanyao", "owner")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new ApiSubscriber<List<Repo>>(this) {
+                .subscribeWith(new ApiSubscriber<List<Repo>>() {
                     @Override
                     public void onNext(List<Repo> repos) {
                         mResultTv.append("请求成功，repoCount:" + repos.size() + ":\n");
@@ -64,6 +61,15 @@ public class HandlerResponseErrorActivity extends BaseActivity implements Handle
                         }
                     }
 
+                    @Override
+                    protected void onFail(NetErrorException error) {
+                        mResultTv.append("请求失败" + error.getMessage() + "................\n");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mResultTv.append("请求成功................\n");
+                    }
                 });
 
 
@@ -71,11 +77,8 @@ public class HandlerResponseErrorActivity extends BaseActivity implements Handle
 
     private void initRetrofitAndService() {
         retrofit = new Retrofit.Builder()
-                .client(new OkHttpClient.Builder()
-                        .addInterceptor(getHttpLoggingInterceptor())
-                        .build())
                 .baseUrl("https://api.github.com/")
-                .addConverterFactory(HandlerErrorGsonConverterFactory.create()) // 这里使用的是用自己智自定义的转换器
+                .addConverterFactory(HandlerErrorGsonConverterFactory.create()) // 这里使用的是用自己自定义的转换器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
@@ -91,14 +94,5 @@ public class HandlerResponseErrorActivity extends BaseActivity implements Handle
         }
     }
 
-    @Override
-    public void onFail(NetErrorException error) {
-        mResultTv.append("请求失败" + error.getMessage() + "................\n");
-    }
-
-    @Override
-    public void complete(String msg) {
-        mResultTv.append("请求成功................\n");
-    }
 
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 
 /**
- * 动态BaseUrl
+ * 动态Url/Path/Parameter/Header
  */
 public class DynamicBaseUrlActivity extends BaseActivity {
 
@@ -26,8 +26,9 @@ public class DynamicBaseUrlActivity extends BaseActivity {
 
     private HostSelectionHandler mHostSelectionHandler;
 
-    public interface Pop {
-        @GET("robots.txt")
+    public interface RobotsService {
+        // 这里为了测试，所以加了一个前缀 test，要做的就是在拦截器中去除这个前缀
+        @GET("test/robots.txt")
         retrofit2.Call<ResponseBody> robots();
     }
 
@@ -39,7 +40,8 @@ public class DynamicBaseUrlActivity extends BaseActivity {
 
 
         mDescTv.setText("本例子说明：\n" +
-                "通过增加自定义 Interceptor 的方式，来完成对 BaseUrl的动态替换。");
+                "通过增加自定义 Interceptor 的方式。\n" +
+                "完成对 动态Url/Path/Parameter/Header 的动态替换和新增。\n");
     }
 
 
@@ -57,35 +59,29 @@ public class DynamicBaseUrlActivity extends BaseActivity {
             public void run() {
                 try {
 
-                    Pop pop = retrofit.create(Pop.class);
+                    RobotsService robots = retrofit.create(RobotsService.class);
                     sendMessage("开始请求................\n");
-                    retrofit2.Response<ResponseBody> response1 = pop.robots().execute();
-                    sendMessage("Response from: \n" + response1.raw().request().url());
-                    sendMessage("\n返回结果：\n" + response1.body().string());
+                    retrofit2.Response<ResponseBody> response = robots.robots().execute();
+                    sendMessage("Response from: \n" + response.raw().request().url());
+                    sendMessage("\n返回结果：\n" + response.body().string());
 
-
-                    sendMessage("\n\n替换url:www.baidu.com\n");
-                    hostSelectionInterceptor.setHost("www.baidu.com");
-                    sendMessage("开始请求................\n");
-                    retrofit2.Response<ResponseBody> response2 = pop.robots().execute();
-                    sendMessage("Response from: " + response2.raw().request().url());
-                    sendMessage("\n返回结果：\n" + response2.body().string());
                 } catch (IOException e) {
                     sendMessage("发生错误：" + e.getMessage());
                     e.printStackTrace();
                 }
             }
 
-            private void sendMessage(String msg) {
-                Logger.e(msg);
-                Message message = mHostSelectionHandler.obtainMessage();
-                message.obj = msg;
-                mHostSelectionHandler.sendMessage(message);
-            }
 
         });
 
 
+    }
+
+    private void sendMessage(String msg) {
+        Logger.e(msg);
+        Message message = mHostSelectionHandler.obtainMessage();
+        message.obj = msg;
+        mHostSelectionHandler.sendMessage(message);
     }
 
     private void initRetrofitAndService() {
@@ -102,38 +98,63 @@ public class DynamicBaseUrlActivity extends BaseActivity {
     }
 
 
+    /**
+     * 自定义的拦截器
+     * 1. 实现baseUrl的动态替换
+     * 2. path的替换
+     * 3. 增加parameter
+     * 3. 增加header
+     */
+    final class HostSelectionInterceptor implements Interceptor {
+
+
+        @Override
+        public okhttp3.Response intercept(Chain chain) throws IOException {
+            // 拿到请求
+            Request request = chain.request();
+
+            HttpUrl httpUrl = request.url();
+            HttpUrl.Builder newUrlBuilder = httpUrl.newBuilder();
+
+            // 替换host
+            String host = httpUrl.host();
+            // 这里是判断 当然真实情况不会这么简单
+            if (httpUrl.host().equals("api.github.com")) {
+                // 只是为了在demo中显示消息提示
+                sendMessage("\n\n替换url:www.baidu.com\n");
+                host = "www.baidu.com";
+            }
+            // 重新设置新的host
+            newUrlBuilder.host(host);
+
+
+            // 替换path
+            //List<String> pathSegments = httpUrl.pathSegments();
+            // 这里是我已经知道了我是要移除第一个路径，所以我直接就移除了
+            // 真实项目中，判断条件更加复杂
+            newUrlBuilder.removePathSegment(0);
+            // 将index的segment替换为传入的值
+            //newUrlBuilder.setPathSegment(index,segment);
+
+            // 添加参数
+            newUrlBuilder.addQueryParameter("version", "v1.3.1");
+
+            // 创建新的请求
+            request = request.newBuilder()
+                    .url(newUrlBuilder.build())
+                    .header("NewHeader", "NewHeaderValue")
+                    .build();
+            // 只是为了在demo中显示消息提示
+            sendMessage("\n\n新请求地址和参数：" + request.url().toString() + "\n\n");
+            return chain.proceed(request);
+        }
+    }
+
+
     final class HostSelectionHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             mResultTv.append((String) msg.obj);
-        }
-    }
-
-    /**
-     * 自定义的拦截器，实现baseUrl的动态替换
-     */
-    static final class HostSelectionInterceptor implements Interceptor {
-        // 这里主要是做线程懂不，保证host的值是唯一的
-        // 具体请看：https://zh.wikipedia.org/wiki/Volatile%E5%8F%98%E9%87%8F
-        private volatile String host;
-
-        public void setHost(String host) {
-            this.host = host;
-        }
-
-        @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            String host = this.host;
-            if (host != null) {
-                HttpUrl newUrl = request.url().newBuilder()
-                        .host(host)
-                        .build();
-                request = request.newBuilder()
-                        .url(newUrl)
-                        .build();
-            }
-            return chain.proceed(request);
         }
     }
 
