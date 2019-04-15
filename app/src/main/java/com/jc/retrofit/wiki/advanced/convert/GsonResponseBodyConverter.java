@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jc.retrofit.wiki.advanced.sample.view.convert;
+package com.jc.retrofit.wiki.advanced.convert;
 
 import android.util.Log;
 import com.google.gson.Gson;
@@ -41,6 +41,7 @@ final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
         // 这里就是对返回结果进行处理
         JsonReader jsonReader = gson.newJsonReader(value.charStream());
         try {
+            value.string();
             Log.e("TAG", "这里进行了返回结果的判断");
             T result = adapter.read(jsonReader);
             if (jsonReader.peek() != JsonToken.END_DOCUMENT) {

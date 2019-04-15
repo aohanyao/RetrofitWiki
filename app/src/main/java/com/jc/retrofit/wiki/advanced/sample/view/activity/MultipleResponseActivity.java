@@ -1,7 +1,7 @@
 package com.jc.retrofit.wiki.advanced.sample.view.activity;
 
 import android.os.Bundle;
-import com.jc.retrofit.wiki.advanced.sample.view.convert.CustGsonConverterFactory;
+import com.jc.retrofit.wiki.advanced.convert.CustGsonConverterFactory;
 import com.jc.retrofit.wiki.base.BaseActivity;
 import com.jc.retrofit.wiki.bean.Repo;
 import com.jc.retrofit.wiki.biz.GitHubService;
